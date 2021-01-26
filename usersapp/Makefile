@@ -12,7 +12,7 @@ repl: ## Run a REPL for development
 
 .PHONY: run
 run: ## Run app locally
-	poetry run scraper 4
+	poetry run runapp
 
 .PHONY: test
 test: ## Runs the tests

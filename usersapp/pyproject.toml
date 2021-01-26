@@ -10,6 +10,9 @@ python = "^3.7"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
 
+[tool.poetry.scripts]
+runapp = "usersapp.cli:run"
+
 # addopts = "-rP" - to print output
 [tool.pytest.ini_options]
 minversion = "6.0"
