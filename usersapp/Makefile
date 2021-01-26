@@ -21,17 +21,17 @@ test: ## Runs the tests
 .PHONY: lint
 lint: ## Lints the app
 	poetry run black . --check
-	poetry run mypy scraper
+	poetry run mypy $(APP_NAME)
 	poetry run autoflake --remove-all-unused-imports \
 		 --remove-duplicate-keys --remove-unused-variables \
-		 scraper/**/*.py test/**/*.py
+		 $(APP_NAME)/*.py test/*.py
 
 .PHONY: fmt
 fmt: ## Formats the code
 	poetry run black .
 	poetry run autoflake --in-place --remove-all-unused-imports \
 		 --remove-duplicate-keys --remove-unused-variables \
-		 scraper/**/*.py test/**/*.py
+		 $(APP_NAME)/*.py test/*.py
 
 .PHONY: db.make-migration
 db.make-migration: ## Auto-generate migration, provide MSG
