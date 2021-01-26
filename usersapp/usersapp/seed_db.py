@@ -10,9 +10,8 @@ def create_user():
     )
 
 
-def add_data():
-    u = create_user()
-
-
 def run():
-    add_data()
+    with session_scope() as session:
+        u = create_user()
+        session.add(u)
+        session.commit()
