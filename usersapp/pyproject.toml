@@ -19,6 +19,7 @@ alembic = "^1.5.2"
 
 [tool.poetry.scripts]
 runapp = "usersapp.cli:run"
+seed_db = "usersapp.seed_db:run"
 
 # addopts = "-rP" - to print output
 [tool.pytest.ini_options]

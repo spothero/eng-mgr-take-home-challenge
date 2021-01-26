@@ -44,12 +44,11 @@ db.migrate: ## Run migration
 .PHONY: db.reset
 db.reset: ## Resets the DB
 	docker-compose down
-	docker volume rm scraper_postgres_data
+	docker volume rm $(APP_NAME)_postgres_data
 	docker-compose up -d db
 	sleep 1 # Need to sleep before we can run db.migrate
 	$(MAKE) db.migrate
 	$(MAKE) db.seed
-	$(MAKE) docker.dump-schema
 
 .PHONY: db.seed
 db.seed: ## Seeds the DB
