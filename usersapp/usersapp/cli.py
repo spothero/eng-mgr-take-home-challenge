@@ -7,8 +7,13 @@ Result = int
 
 
 class EmailAPIProxy:
+    """
+    Simulates an email sending API
+    """
+
     def send(self, notification: Notification) -> None:
-        raise NotImplementedError
+        # Send the notification via an email provider API
+        notification.status_code = 201
 
 
 def register_user(user: User) -> Result:
@@ -28,9 +33,12 @@ def send_welcome_message(db: Session, email: str) -> None:
         user=user,
         body=message,
     )
-    db.add(notification)
 
-    print(f"user is {user.__dict__}")
+    # Send the notification
+    emailer = EmailAPIProxy()
+    emailer.send(notification)
+
+    db.add(notification)
 
 
 def run(args=None):

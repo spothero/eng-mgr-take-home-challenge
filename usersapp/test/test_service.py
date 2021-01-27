@@ -11,3 +11,5 @@ def test_send_welcome_email(session: Session) -> None:
     send_welcome_message(session, u.email)
 
     assert len(u.notifications) == 1
+    notification = u.notifications[0]
+    assert notification.status_code == 201
