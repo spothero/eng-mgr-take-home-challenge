@@ -9,6 +9,7 @@ python = "^3.7"
 sqlalchemy = "^1.3.22"
 python-dotenv = "^0.15.0"
 psycopg2-binary = "^2.8.6"
+pyservice = "^0.0.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
@@ -23,6 +24,7 @@ runapp = "usersapp.cli:run"
 seed_db = "usersapp.seed_db:run"
 
 # addopts = "-rP" - to print output
+# addopts = "-ra -q"
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-ra -q"

@@ -1,6 +1,8 @@
-from .models import User, Notification
 from sqlalchemy.orm.session import Session
+from pyservice import Context, action
 from typing import Optional
+
+from .models import User, Notification
 
 
 class EmailAPIProxy:
@@ -30,15 +32,25 @@ def _send_welcome_message(db: Session, user: User) -> User:
         body=message,
     )
 
-    # Send the notification
+    ctx = Context.make({"notification": notification})
+    send_email(ctx)
+
+    db.add(notification)
+
+    return user
+
+
+@action()
+def send_email(ctx: Context) -> Context:
+    notification = ctx["notification"]
+
     emailer = EmailAPIProxy()
 
     try:
         emailer.send(notification)
     except:
         # Log error
-        pass
+        notification.status_code = 500
+        ctx.fail("Error occurred sending the API")
 
-    db.add(notification)
-
-    return user
+    return ctx
