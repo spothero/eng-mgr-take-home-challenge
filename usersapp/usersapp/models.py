@@ -10,8 +10,9 @@ from sqlalchemy import (
     TIMESTAMP,
     text,
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 import datetime
+import re
 
 
 Base = declarative_base()
@@ -34,6 +35,19 @@ class User(Base):
     updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
     notifications = relationship("Notification")
+
+    @validates("email")
+    def validate_email(self, key, email):
+        """
+        Validates the :attr:`email` format.
+        :raises: :exc:`~exceptions.ValueError` when it's invalid
+        """
+        if email is None:
+            return
+        email = email.strip()
+        if re.match("[^@]+@[^@]+\.[^@]+", email):
+            return email
+        raise ValueError("{0!r} is an invalid email address".format(email))
 
 
 class Notification(Base):
