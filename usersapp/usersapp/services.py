@@ -32,7 +32,12 @@ def _send_welcome_message(db: Session, user: User) -> User:
 
     # Send the notification
     emailer = EmailAPIProxy()
-    emailer.send(notification)
+
+    try:
+        emailer.send(notification)
+    except:
+        # Log error
+        pass
 
     db.add(notification)
 

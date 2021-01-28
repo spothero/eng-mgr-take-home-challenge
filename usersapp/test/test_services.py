@@ -4,7 +4,7 @@ from typing import cast
 from pytest import raises
 
 from .factories import user_factory
-from usersapp.services import register_user, _send_welcome_message
+from usersapp.services import EmailAPIProxy, register_user, _send_welcome_message
 from usersapp.models import User
 
 
@@ -22,7 +22,7 @@ def test_register_user__no_errors(session: Session) -> None:
         assert located_user.first_name == u.first_name
 
 
-def test_send_welcome_email(session: Session) -> None:
+def test_send_welcome_message__no_errors(session: Session) -> None:
     u = user_factory()
     session.add(u)
 
@@ -33,3 +33,19 @@ def test_send_welcome_email(session: Session) -> None:
     assert len(notifications) == 1
     notification = notifications[0]
     assert notification.status_code == 201
+
+
+def test_send_welcome_message__api_fails(session: Session) -> None:
+    u = user_factory()
+    session.add(u)
+
+    def my_side_effect(*args):
+        raise Exception("Error calling the API")
+
+    with patch.object(EmailAPIProxy, "send", side_effect=my_side_effect):
+        # Call function under test
+        _send_welcome_message(session, u)
+
+    # This is a problem...
+    # We shouldn't have inconsistent state in our DB
+    assert len(u.notifications) == 1  # type: ignore
