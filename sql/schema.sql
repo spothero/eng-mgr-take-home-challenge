@@ -16,7 +16,7 @@ CREATE TABLE worked_hours (
   date DATE NOT NULL,
   hours NUMERIC(4,2) NOT NULL CHECK (hours > 0 AND hours <= 24),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (user_id, date)
+  PRIMARY KEY (user_id, date),
   CONSTRAINT fk_users
     FOREIGN KEY(user_id)
     REFERENCES users(id)
