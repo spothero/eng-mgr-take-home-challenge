@@ -12,11 +12,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE worked_hours (
-  id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   date DATE NOT NULL,
   hours NUMERIC(4,2) NOT NULL CHECK (hours > 0 AND hours <= 24),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  UNIQUE (user_id, date)
   CONSTRAINT fk_users
     FOREIGN KEY(user_id)
     REFERENCES users(id)
