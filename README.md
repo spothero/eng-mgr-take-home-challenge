@@ -19,7 +19,7 @@ We would like to assess your skills in the following areas:
 * Docker
 * Git
 * GitHub
-* A programming language
+* A programming language - current SpotHero Languages (Python, Kotlin, Swift, GoLang)
 * SQL
 * REST
 * APIs
