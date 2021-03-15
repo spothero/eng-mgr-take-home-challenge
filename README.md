@@ -10,7 +10,7 @@ You need Docker to run this project. Please run `docker-compose up -d` to downlo
 We added a [Makefile](/Makefile) to the project for easier interaction. Run `make help` to see what commands are available for you.
 In case the `make` tool is not available on your operating system, open up the Makefile and copy/paste the commands from there.
 
-An easy way to look into the content of the database is running `docker-compose exec db psql -U $(POSTGRES_USER) -d $(POSTGRES_DB)` (or executing the corresponding make command, `make docker.db-prompt`), that will provide the `psql` prompt, the command-line tool of PostgreSQL.
+An easy way to look into the content of the database is by running `docker-compose exec db psql -U $(POSTGRES_USER) -d $(POSTGRES_DB)` (or executing the corresponding make command, `make docker.db-prompt`), that will provide the `psql` prompt, the command-line tool of PostgreSQL.
 
 ## Our Goals
 
@@ -86,4 +86,4 @@ a new `worked_hour` record is inserted into the database.
 Although it's not required, if you have time, we would love to see:
 
 * Automated tests for your solution,
-* Dockerizing the API project and adding it to `docker-compose`.
+* A Dockerfile to run the API project in Docker, maybe expanding our [docker-compose.yml](/docker-compose.yml) with it.
