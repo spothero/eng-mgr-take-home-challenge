@@ -1,0 +1,14 @@
+spring:
+  profiles: default
+
+server:
+  port: 8080
+  servlet:
+    contextPath: /v1
+
+management:
+  server:
+    address: 127.0.0.1
+    port: 9090
+    security:
+      enabled: false
