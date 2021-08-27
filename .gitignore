@@ -1,3 +1,9 @@
 usersapp/.venv
 usersapp/usersapp.egg-info
 **/__pycache__
+logs/
+mvnw
+mvnw.cmd
+target/
+HELP.md
+.idea/
