@@ -1,4 +1,4 @@
-package com.manager.takehome.challenge.IntegrationTests;
+package com.manager.takehome.challenge.integrationTests;
 
 import TestUtils.TestConstants;
 import org.junit.jupiter.api.Test;

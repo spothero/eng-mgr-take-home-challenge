@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "description": "Schema describing user properties",
+  "title": "User",
+  "additionalProperties": false,
+  "properties": {
+    "managerId": {
+      "type": "integer",
+      "description": "Id number of the"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "first name of the user"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "last name of the user"
+    },
+    "email": {
+      "type": "string",
+      "description": "email address of the user"
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName",
+    "email",
+    "isActive"
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#"
+}

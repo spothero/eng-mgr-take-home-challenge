@@ -1,7 +1,7 @@
 package com.manager.takehome.challenge.controller;
 
 import com.manager.takehome.challenge.config.AppConfigurations;
-import com.manager.takehome.challenge.model.BaseModel;
+import com.manager.takehome.challenge.models.BaseModel;
 
 import com.manager.takehome.challenge.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;

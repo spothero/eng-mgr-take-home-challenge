@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "description": "Response schema after posting new worked hours",
+  "title": "WorkedHoursPostageResponse",
+  "additionalProperties": false,
+  "properties": {
+    "postageSuccess": {
+      "type": "boolean",
+      "description": "were the hours posted successfully? true or false"
+    },
+    "message": {
+      "type": "string",
+      "description": "verbose message"
+    },
+    "error": {
+      "type": "object",
+      "$ref": "error.json"
+    }
+  },
+  "required": [],
+  "$schema": "http://json-schema.org/draft-06/schema#"
+}

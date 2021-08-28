@@ -1,4 +1,4 @@
-package com.manager.takehome.challenge.model;
+package com.manager.takehome.challenge.models;
 
 public class BaseModel {
 
