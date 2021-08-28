@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "description": "Response schema for returning details about all the hours worked by a user",
+  "title": "WorkedHoursResponse",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Id number of the"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "date on which hours were recorded"
+    },
+    "hours": {
+      "type": "number",
+      "description": "first name of the user"
+    },
+    "error": {
+      "type": "object",
+      "$ref": "error.json"
+    }
+  },
+  "required": [],
+  "$schema": "http://json-schema.org/draft-06/schema#"
+}

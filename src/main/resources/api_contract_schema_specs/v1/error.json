@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "description": "Schema for Errors",
+  "title": "Error",
+  "additionalProperties": false,
+  "properties": {
+    "errorCode": {
+      "type": "integer",
+      "description": "Error Code"
+    },
+    "errorMessage": {
+      "type": "string",
+      "description": "Error Message"
+    }
+  },
+  "required": [],
+  "$schema": "http://json-schema.org/draft-06/schema#"
+}

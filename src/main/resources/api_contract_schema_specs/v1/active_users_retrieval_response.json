@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "description": "Response Schema for returning all ACTIVE users",
+  "title": "ActiveUsersResponse",
+  "additionalProperties": false,
+  "properties": {
+    "activeUsers": {
+      "type": "array",
+      "items": {
+        "$ref": "user.json"
+      }
+    },
+    "error": {
+      "type": "object",
+      "$ref": "error.json"
+    }
+  },
+  "required": [],
+  "$schema": "http://json-schema.org/draft-06/schema#"
+}

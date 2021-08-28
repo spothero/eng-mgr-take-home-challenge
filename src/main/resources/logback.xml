@@ -69,7 +69,7 @@
 	</logger>
 
 	<logger name="org.springframework.cloud"
-			level="ERROR" additivity="FALSE">
+			level="INFO" additivity="FALSE">
 		<appender-ref ref="STDOUT"/>
 	</logger>
   
@@ -83,7 +83,7 @@
 		<appender-ref ref="STDOUT"/>
 	</logger>
 
-	<logger name="org.springframework" level="ERROR">
+	<logger name="org.springframework" level="INFO">
   		<appender-ref ref="STDOUT"/>
 	</logger>
 

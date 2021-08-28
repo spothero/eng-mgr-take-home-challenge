@@ -7,3 +7,8 @@ mvnw.cmd
 target/
 HELP.md
 .idea/
+*.iws
+*.iml
+*.ipr
+/out/
+/src/generated/

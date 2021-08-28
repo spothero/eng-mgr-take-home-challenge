@@ -21,7 +21,9 @@
         <logstash.logback.encoder.version>6.6</logstash.logback.encoder.version>
         <puppycrawl.tools.version>8.11</puppycrawl.tools.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
+        <jsonschema2pojo.plugin.version>1.0.0</jsonschema2pojo.plugin.version>
 		<mvn.pmd.verion>3.14.0</mvn.pmd.verion>
+        <javax.validation.verion>1.1.0.Final</javax.validation.verion>
 
 
         <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
@@ -33,10 +35,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency> -->
+        </dependency>
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -53,10 +55,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency> -->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -115,6 +117,10 @@
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -159,6 +165,11 @@
                 <artifactId>checkstyle</artifactId>
                 <version>${puppycrawl.tools.version}</version>
             </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.verion}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <reporting>
@@ -176,6 +187,11 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>com.groupon.maven.plugin.json</groupId>
+                <artifactId>json-schema-validator</artifactId>
+                <version>VERSION</version>
             </plugin>
         </plugins>
     </reporting>
@@ -238,6 +254,84 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.basedir}/src/generated/models/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>${jsonschema2pojo.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-schemas</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/resources/api_contract_schema_specs/</sourceDirectory>
+                            <targetPackage>com.manager.takehome.challenge</targetPackage>
+                            <outputDirectory>${project.basedir}/src/generated/models/</outputDirectory>
+                            <generateBuilders>true</generateBuilders>
+                            <annotationStyle>jackson2</annotationStyle>
+                            <includeJsr303Annotations>true</includeJsr303Annotations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <!-- clean generated every time-->
+                            <directory>src/generated/</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>json-schema-validator</artifactId>
+                <groupId>com.groupon.maven.plugin.json</groupId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <validations>
+                        <validation>
+                            <directory>${basedir}/src/main/resources/api_contract_schema_specs/</directory>
+                            <includes>
+                                <include>**/*.json</include>
+                            </includes>
+                        </validation>
+                    </validations>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
