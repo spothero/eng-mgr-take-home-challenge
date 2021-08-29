@@ -6,8 +6,8 @@ import java.sql.Timestamp;
 
 public class User
 {
-  private long id;
-  private long managerId;
+  private int id;
+  private int managerId;
   private String firstName;
   private String lastName;
   private String email;
@@ -24,11 +24,11 @@ public class User
     this.createdAtTimeStamp = builder.createdAtTimeStamp;
   }
 
-  public long getUserId() {
+  public int getId() {
     return id;
   }
 
-  public long getManagerId() {
+  public int getManagerId() {
     return managerId;
   }
 
@@ -54,14 +54,14 @@ public class User
 
   @Override
   public String toString() {
-    return "User: "+this.id+", "+this.managerId+", "+this.firstName+", "+this.lastName+", "+this.email+", "+this.isActive+", "+this.createdAtTimeStamp;
+    return "User: "+this.id+", "+this.managerId+", "+this.firstName+", " +
+        ""+this.lastName+", "+this.email+", "+this.isActive+", "+this.createdAtTimeStamp;
   }
 
   public static class UserBuilder
   {
-    @Id
-    private long id;
-    private long managerId;
+    private int id;
+    private int managerId;
     private String firstName;
     private String lastName;
     private String email;
@@ -71,18 +71,18 @@ public class User
     public UserBuilder() {
     }
 
-    public UserBuilder(long id, String firstName, String lastName) {
+    public UserBuilder(int id, String firstName, String lastName) {
       this.id = id;
       this.firstName = firstName;
       this.lastName = lastName;
     }
 
-    public UserBuilder withId(long id) {
+    public UserBuilder withId(int id) {
       this.id = id;
       return this;
     }
 
-    public UserBuilder withManagerId(long managerId) {
+    public UserBuilder withManagerId(int managerId) {
       this.managerId = managerId;
       return this;
     }

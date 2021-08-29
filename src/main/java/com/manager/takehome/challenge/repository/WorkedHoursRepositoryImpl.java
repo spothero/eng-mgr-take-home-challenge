@@ -29,12 +29,12 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
     mapSqlParameterSource.addValue("id",  userId );
 
     return namedParameterJdbcTemplate.query("select worked_hours.user_id, "
-            + "worked_hours.date, worked_hours.hours, from worked_hours "
+            + "worked_hours.date, worked_hours.hours from worked_hours "
             + "where worked_hours.user_id = :id",
         mapSqlParameterSource,
         (rs, rowNum) ->
             new WorkedHours.WorkedHoursBuilder(
-                rs.getLong("id"),
+                rs.getInt("id"),
                 rs.getDate("date"),
                 rs.getFloat("hours")
             ).build()

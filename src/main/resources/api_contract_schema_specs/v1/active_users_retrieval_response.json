@@ -1,10 +1,10 @@
 {
   "type": "object",
   "description": "Response Schema for returning all ACTIVE users",
-  "title": "ActiveUsersResponse",
+  "title": "active_users_retrieval_response",
   "additionalProperties": false,
   "properties": {
-    "activeUsers": {
+    "active_users": {
       "type": "array",
       "items": {
         "$ref": "user.json"

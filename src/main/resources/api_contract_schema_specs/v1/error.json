@@ -1,16 +1,16 @@
 {
   "type": "object",
-  "description": "Schema for Errors",
-  "title": "Error",
+  "description": "schema for errors",
+  "title": "error",
   "additionalProperties": false,
   "properties": {
-    "errorCode": {
+    "error_code": {
       "type": "integer",
-      "description": "Error Code"
+      "description": "error code"
     },
-    "errorMessage": {
+    "error_message": {
       "type": "string",
-      "description": "Error Message"
+      "description": "error message"
     }
   },
   "required": [],

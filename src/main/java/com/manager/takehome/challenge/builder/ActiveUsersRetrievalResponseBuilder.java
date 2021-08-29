@@ -21,7 +21,7 @@ public class ActiveUsersRetrievalResponseBuilder {
       for (User activeUser : activeUsers) {
         com.manager.takehome.challenge.dto.v1.User user =
             new com.manager.takehome.challenge.dto.v1.User();
-        user.setId(activeUser.getManagerId());
+        user.setId(activeUser.getId());
         user.setFirstName(activeUser.getFirstName());
         user.setLastName(activeUser.getLastName());
         user.setEmail(activeUser.getEmailAddress());

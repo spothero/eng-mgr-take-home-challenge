@@ -1,21 +1,14 @@
 {
   "type": "object",
-  "description": "Response schema for returning details about all the hours worked by a user",
-  "title": "WorkedHoursResponse",
+  "description": "response schema for returning all ACTIVE users",
+  "title": "worked_hours_retrieval_response",
   "additionalProperties": false,
   "properties": {
-    "id": {
-      "type": "long",
-      "description": "Id number of the"
-    },
-    "date": {
-      "type": "string",
-      "format": "date-time",
-      "description": "date on which hours were recorded"
-    },
-    "hours": {
-      "type": "number",
-      "description": "first name of the user"
+    "worked_hours": {
+      "type": "array",
+      "items": {
+        "$ref": "worked_hours.json"
+      }
     },
     "error": {
       "type": "object",

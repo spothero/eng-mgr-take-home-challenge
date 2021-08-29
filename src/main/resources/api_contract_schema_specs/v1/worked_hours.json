@@ -1,12 +1,12 @@
 {
   "type": "object",
-  "description": "Request schema to post new worked hours",
-  "title": "WorkedHoursRequest",
+  "description": "request schema to post new worked hours",
+  "title": "worked_hours",
   "additionalProperties": false,
   "properties": {
     "id": {
-      "type": "long",
-      "description": "Id number of the"
+      "type": "integer",
+      "description": "id of the user posting the worked hours"
     },
     "date": {
       "type": "string",

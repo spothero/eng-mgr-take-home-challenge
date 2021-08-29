@@ -1,10 +1,10 @@
 {
   "type": "object",
   "description": "Response schema after posting new worked hours",
-  "title": "WorkedHoursPostageResponse",
+  "title": "worked_hours_record_response",
   "additionalProperties": false,
   "properties": {
-    "postageSuccess": {
+    "postage_success": {
       "type": "boolean",
       "description": "were the hours posted successfully? true or false"
     },

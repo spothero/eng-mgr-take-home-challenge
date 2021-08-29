@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
         mapSqlParameterSource,
         (rs, rowNum) ->
             new User.UserBuilder(
-                rs.getLong("id"),
+                rs.getInt("id"),
                 rs.getString("first_name"),
                 rs.getString("last_name")
             ).withEmailAddress(rs.getString("email"))
