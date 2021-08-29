@@ -16,19 +16,19 @@ public class ActiveUsersRetrievalResponseBuilder {
   public static ActiveUsersRetrievalResponse buildActiveUsersRetrievalResponse(
       List<User> activeUsers) {
     ActiveUsersRetrievalResponse activeUsersRetrievalResponse = new ActiveUsersRetrievalResponse();
-    List<com.manager.takehome.challenge.dto.v1.User> users = new ArrayList<>();
+    List<com.manager.takehome.challenge.dto.v1.User> usersDtoList = new ArrayList<>();
     if (CollectionUtils.isNotEmpty(activeUsers)) {
       for (User activeUser : activeUsers) {
-        com.manager.takehome.challenge.dto.v1.User user =
+        com.manager.takehome.challenge.dto.v1.User userDto =
             new com.manager.takehome.challenge.dto.v1.User();
-        user.setId(activeUser.getId());
-        user.setFirstName(activeUser.getFirstName());
-        user.setLastName(activeUser.getLastName());
-        user.setEmail(activeUser.getEmailAddress());
-        users.add(user);
+        userDto.setId(activeUser.getId());
+        userDto.setFirstName(activeUser.getFirstName());
+        userDto.setLastName(activeUser.getLastName());
+        userDto.setEmail(activeUser.getEmailAddress());
+        usersDtoList.add(userDto);
       }
     }
-    activeUsersRetrievalResponse.setActiveUsers(users);
+    activeUsersRetrievalResponse.setActiveUsers(usersDtoList);
     return activeUsersRetrievalResponse;
 
   }

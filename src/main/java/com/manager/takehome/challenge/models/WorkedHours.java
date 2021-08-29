@@ -1,13 +1,14 @@
 package com.manager.takehome.challenge.models;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 
 public class WorkedHours
 {
-  private long userId;
+  private int userId;
   private Date date;
-  private float hours;
+  private BigDecimal hours;
   private Timestamp createdAtTimeStamp;
 
   private WorkedHours(WorkedHoursBuilder builder) {
@@ -17,7 +18,7 @@ public class WorkedHours
     this.createdAtTimeStamp = builder.createdAtTimeStamp;
   }
 
-  public long getUserId() {
+  public int getUserId() {
     return userId;
   }
 
@@ -25,7 +26,7 @@ public class WorkedHours
     return date;
   }
 
-  public float getHours() {
+  public BigDecimal getHours() {
     return hours;
   }
 
@@ -40,21 +41,21 @@ public class WorkedHours
 
   public static class WorkedHoursBuilder
   {
-    private long userId;
+    private int userId;
     private Date date;
-    private float hours;
+    private BigDecimal hours;
     private Timestamp createdAtTimeStamp;
 
     public WorkedHoursBuilder() {
     }
 
-    public WorkedHoursBuilder(long userId, Date date, float hours) {
+    public WorkedHoursBuilder(int userId, Date date, BigDecimal hours) {
       this.userId = userId;
       this.date = date;
       this.hours = hours;
     }
 
-    public WorkedHoursBuilder withUserId(long userId) {
+    public WorkedHoursBuilder withUserId(int userId) {
       this.userId = userId;
       return this;
     }
@@ -64,7 +65,7 @@ public class WorkedHours
       return this;
     }
 
-    public WorkedHoursBuilder withHours(float hours) {
+    public WorkedHoursBuilder withHours(BigDecimal hours) {
       this.hours = hours;
       return this;
     }

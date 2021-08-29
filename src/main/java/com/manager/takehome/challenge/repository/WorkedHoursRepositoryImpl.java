@@ -34,9 +34,9 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
         mapSqlParameterSource,
         (rs, rowNum) ->
             new WorkedHours.WorkedHoursBuilder(
-                rs.getInt("id"),
+                rs.getInt("user_id"),
                 rs.getDate("date"),
-                rs.getFloat("hours")
+                rs.getBigDecimal("hours")
             ).build()
     );
   }
