@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "type": "integer",
+      "type": "long",
       "description": "Id number of the"
     },
     "date": {

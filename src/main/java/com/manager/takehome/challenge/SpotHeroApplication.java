@@ -25,7 +25,6 @@ public class SpotHeroApplication {
     System.out.println("using management port:" + appConfig.getManagementServerPort());
     System.out.println("using management server address:" + appConfig.getManagementServerAddress());
     System.out.println("using spring profile:" + appConfig.getSpringProfile());
-    System.out.println("using context path port: " + appConfig.getContextPath());
   }
 }
 

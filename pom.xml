@@ -24,11 +24,16 @@
         <jsonschema2pojo.plugin.version>1.0.0</jsonschema2pojo.plugin.version>
 		<mvn.pmd.verion>3.14.0</mvn.pmd.verion>
         <javax.validation.verion>1.1.0.Final</javax.validation.verion>
-
+        <org.apache.commons.version>3.12.0</org.apache.commons.version>
+        <failsafe.plugin.version>2.22.1</failsafe.plugin.version>
 
         <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
         <checkstyle.failsOnError>true</checkstyle.failsOnError>
         <checkstyle.violationSeverity>warning</checkstyle.violationSeverity>
+
+        <skipTests>false</skipTests>
+        <skipITs>${skipTests}</skipITs>
+        <skipUTs>${skipTests}</skipUTs>
     </properties>
     <dependencies>
         <dependency>
@@ -121,6 +126,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -169,6 +178,11 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${javax.validation.verion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -232,7 +246,7 @@
                             <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
                             <violationSeverity>${checkstyle.violationSeverity}</violationSeverity>
                             <!-- exclude generated models -->
-                            <excludes>**/generated-resources/**/*, **/generated/**/*</excludes>
+                            <excludes>**/generated-resources/**/*, **/generated/**/*, **/v1/**/*, **/models/**/*</excludes>
                         </configuration>
                     </execution>
                 </executions>
@@ -243,7 +257,7 @@
                 <configuration>
                     <printFailingErrors>true</printFailingErrors>
                     <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
-                    <excludes>**/generated-resources/**/*, **/generated/**/*</excludes>
+                    <excludes>**/generated-resources/**/*, **/generated/**/*, **/v1/**/*, **/models/**/*</excludes>
                 </configuration>
                 <executions>
                     <execution>
@@ -267,7 +281,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.basedir}/src/generated/models/</source>
+                                <source>${project.basedir}/src/generated/</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -286,8 +300,8 @@
                         </goals>
                         <configuration>
                             <sourceDirectory>${project.basedir}/src/main/resources/api_contract_schema_specs/</sourceDirectory>
-                            <targetPackage>com.manager.takehome.challenge</targetPackage>
-                            <outputDirectory>${project.basedir}/src/generated/models/</outputDirectory>
+                            <targetPackage>com.manager.takehome.challenge.dto</targetPackage>
+                            <outputDirectory>${project.basedir}/src/generated/</outputDirectory>
                             <generateBuilders>true</generateBuilders>
                             <annotationStyle>jackson2</annotationStyle>
                             <includeJsr303Annotations>true</includeJsr303Annotations>
@@ -331,6 +345,28 @@
                             </includes>
                         </validation>
                     </validations>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>run-integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <skipTests>${skipTests}</skipTests>
+                    <skipITs>${skipITs}</skipITs>
                 </configuration>
             </plugin>
         </plugins>

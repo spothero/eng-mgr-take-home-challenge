@@ -16,9 +16,6 @@ public class AppConfigurations {
   @Value("${server.port}")
   private String serverPort;
 
-  @Value("${server.servlet.contextPath}")
-  private String contextPath;
-
   @Value("${management.server.port}")
   private String managementServerPort;
 
@@ -34,10 +31,6 @@ public class AppConfigurations {
 
   public String getServerPort() {
     return serverPort;
-  }
-
-  public String getContextPath() {
-    return contextPath;
   }
 
   public String getManagementServerPort() {

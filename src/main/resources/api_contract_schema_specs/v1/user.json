@@ -4,9 +4,9 @@
   "title": "User",
   "additionalProperties": false,
   "properties": {
-    "managerId": {
-      "type": "integer",
-      "description": "Id number of the"
+    "id": {
+      "type": "long",
+      "description": "Id number of the user"
     },
     "firstName": {
       "type": "string",

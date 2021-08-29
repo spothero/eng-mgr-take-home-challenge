@@ -55,8 +55,6 @@ public class BaseController {
         + ", management server address:"
         + appConfigurations.getManagementServerAddress()
         + ", spring profile:"
-        + appConfigurations.getSpringProfile()
-        + ", context path: "
-        + appConfigurations.getContextPath();
+        + appConfigurations.getSpringProfile();
   }
 }
