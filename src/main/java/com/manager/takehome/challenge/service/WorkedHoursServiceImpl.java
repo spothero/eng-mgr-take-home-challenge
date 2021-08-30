@@ -13,8 +13,8 @@ public class WorkedHoursServiceImpl implements WorkedHoursService {
   WorkedHoursRepository workedHoursRepository;
 
   @Override
-  public int saveWorkedHoursByUser(WorkedHours workedHours) {
-    return workedHoursRepository.saveWorkedHoursByUser(workedHours);
+  public int saveWorkedHoursByUser(int id, WorkedHours workedHours) {
+    return workedHoursRepository.saveWorkedHoursByUser(id, workedHours);
   }
 
   @Override

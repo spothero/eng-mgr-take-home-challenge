@@ -1,15 +1,15 @@
 package com.manager.takehome.challenge.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class WorkedHours
 {
   private int userId;
-  private Date date;
+  private LocalDate date;
   private BigDecimal hours;
-  private Timestamp createdAtTimeStamp;
+  private LocalDateTime createdAtTimeStamp;
 
   private WorkedHours(WorkedHoursBuilder builder) {
     this.userId = builder.userId;
@@ -22,7 +22,7 @@ public class WorkedHours
     return userId;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
@@ -30,7 +30,7 @@ public class WorkedHours
     return hours;
   }
 
-  public Timestamp getCreatedAtTimeStamp() {
+  public LocalDateTime getCreatedAtTimeStamp() {
     return createdAtTimeStamp;
   }
 
@@ -42,14 +42,14 @@ public class WorkedHours
   public static class WorkedHoursBuilder
   {
     private int userId;
-    private Date date;
+    private LocalDate date;
     private BigDecimal hours;
-    private Timestamp createdAtTimeStamp;
+    private LocalDateTime createdAtTimeStamp;
 
     public WorkedHoursBuilder() {
     }
 
-    public WorkedHoursBuilder(int userId, Date date, BigDecimal hours) {
+    public WorkedHoursBuilder(int userId, LocalDate date, BigDecimal hours) {
       this.userId = userId;
       this.date = date;
       this.hours = hours;
@@ -60,7 +60,7 @@ public class WorkedHours
       return this;
     }
 
-    public WorkedHoursBuilder withDate(Date date) {
+    public WorkedHoursBuilder withDate(LocalDate date) {
       this.date = date;
       return this;
     }
@@ -70,7 +70,7 @@ public class WorkedHours
       return this;
     }
 
-    public WorkedHoursBuilder withCreatedAtTimeStamp(Timestamp createdAtTimeStamp) {
+    public WorkedHoursBuilder withCreatedAtTimeStamp(LocalDateTime createdAtTimeStamp) {
       this.createdAtTimeStamp = createdAtTimeStamp;
       return this;
     }

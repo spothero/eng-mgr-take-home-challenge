@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WorkedHoursService {
 
-  int saveWorkedHoursByUser(WorkedHours workedHours);
+  int  saveWorkedHoursByUser(int id, WorkedHours workedHours);
 
   List<WorkedHours> findAllWorkedHoursByUser(long userId);
 }

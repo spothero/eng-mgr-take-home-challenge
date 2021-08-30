@@ -1,6 +1,10 @@
 package com.manager.takehome.challenge.controller;
 
+import com.manager.takehome.challenge.adapter.WorkedHoursRecordRequestAdapter;
+import com.manager.takehome.challenge.builder.WorkedHoursRecordResponseBuilder;
 import com.manager.takehome.challenge.builder.WorkedHoursRetrievalResponseBuilder;
+import com.manager.takehome.challenge.dto.v1.WorkedHoursRecordRequest;
+import com.manager.takehome.challenge.dto.v1.WorkedHoursRecordResponse;
 import com.manager.takehome.challenge.dto.v1.WorkedHoursRetrievalResponse;
 import com.manager.takehome.challenge.service.WorkedHoursService;
 import com.manager.takehome.challenge.util.CorrelationIdUtil;
@@ -13,20 +17,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
-public class HoursWorkedController {
+public class WorkedHoursController {
 
   @Autowired
   WorkedHoursService workedHoursService;
 
-  private static final Logger logger = LoggerFactory.getLogger(HoursWorkedController.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkedHoursController.class);
 
   /**
    * retrieve all active users in the system.
@@ -51,5 +57,34 @@ public class HoursWorkedController {
             workedHoursService.findAllWorkedHoursByUser(id));
 
     return new ResponseEntity<Object>(workedHoursRetrievalResponse, HttpStatus.OK);
+  }
+
+  /**
+   * post worked hours for a user
+   * * @return ResponseEntity.
+   * @throws Exception when response not correct.
+   */
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
+  @RequestMapping(
+      value = "/v1/users/{id}/worked_hours",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      method = RequestMethod.POST)
+  @ResponseBody
+  public ResponseEntity<Object> recordWorkedHours(
+      HttpServletRequest httpServletRequest, @PathVariable(required = true) int id,
+      @Valid @RequestBody WorkedHoursRecordRequest workedHoursRecordRequest)
+      throws Exception {
+    MDC.clear();
+    MDC.put("correlationId", CorrelationIdUtil.getCorrelationIdFromHeader(httpServletRequest));
+    logger.info("*** Recording hours worked for user" + id);
+
+
+    WorkedHoursRecordResponse workedHoursRecordResponse = WorkedHoursRecordResponseBuilder
+        .buildWorkedHoursRecordResponse(workedHoursService.saveWorkedHoursByUser(
+            id, WorkedHoursRecordRequestAdapter.adaptWorkedHoursRecordRequest(
+                id, workedHoursRecordRequest)));
+
+    return new ResponseEntity<Object>(workedHoursRecordResponse, HttpStatus.OK);
   }
 }

@@ -21,7 +21,7 @@ public class WorkedHoursRetrievalResponseBuilder {
         com.manager.takehome.challenge.dto.v1.WorkedHours workedHoursDto =
             new com.manager.takehome.challenge.dto.v1.WorkedHours();
         workedHoursDto.setId(workedHours.getUserId());
-        workedHoursDto.setDate(workedHours.getDate());
+        workedHoursDto.setDate(workedHours.getDate().toString());
         workedHoursDto.setHours(workedHours.getHours().doubleValue());
         workedHoursDtoList.add(workedHoursDto);
       }

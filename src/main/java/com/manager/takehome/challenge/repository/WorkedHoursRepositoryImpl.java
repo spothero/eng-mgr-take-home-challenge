@@ -2,6 +2,7 @@ package com.manager.takehome.challenge.repository;
 
 import com.manager.takehome.challenge.models.WorkedHours;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,9 +15,14 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
   @Autowired
   private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-  public int saveWorkedHoursByUser(WorkedHours workedHours) {
-
-    return 1;
+  /**
+   * saves worked hours for a user.
+   * * @return affected rows
+   */
+  public int saveWorkedHoursByUser(int id, WorkedHours workedHours) {
+    return namedParameterJdbcTemplate.update("insert into worked_hours "
+        + "(user_id, date, hours) values (:userId,  :date, :hours);",
+        new BeanPropertySqlParameterSource(workedHours));
   }
 
   /**
@@ -35,7 +41,7 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
         (rs, rowNum) ->
             new WorkedHours.WorkedHoursBuilder(
                 rs.getInt("user_id"),
-                rs.getDate("date"),
+                rs.getDate("date").toLocalDate(),
                 rs.getBigDecimal("hours")
             ).build()
     );
