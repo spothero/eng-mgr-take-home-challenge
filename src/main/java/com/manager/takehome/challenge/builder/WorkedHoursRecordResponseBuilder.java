@@ -11,9 +11,12 @@ public class WorkedHoursRecordResponseBuilder {
   public  static WorkedHoursRecordResponse buildWorkedHoursRecordResponse(int rowsAffected) {
 
     WorkedHoursRecordResponse workedHoursRecordResponse = new WorkedHoursRecordResponse();
-    if (rowsAffected > 0) {
+    if (rowsAffected == 1) {
       workedHoursRecordResponse.setPostSuccess(true);
       workedHoursRecordResponse.setMessage(Constants.POST_HOURS_SUCCESS);
+    } else {
+      workedHoursRecordResponse.setPostSuccess(false);
+      workedHoursRecordResponse.setMessage(Constants.POST_HOURS_FAILED);
     }
     return workedHoursRecordResponse;
   }

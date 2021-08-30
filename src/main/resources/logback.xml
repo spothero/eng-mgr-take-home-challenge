@@ -1,98 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<property name="LOG_PATH" value="logs"/>
-	<property name="SERVICE_NAME" value="spot-hero"/>
-
-	<appender name="FILE"
-			  class="ch.qos.logback.core.rolling.RollingFileAppender">
-
-		<file>${LOG_PATH}/${SERVICE_NAME}.log</file>
-
-		<rollingPolicy
-				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/${SERVICE_NAME}.%d{yyyy-MM-dd}.log
-			</fileNamePattern>
-		</rollingPolicy>
-
-		<rollingPolicy
-				class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/${SERVICE_NAME}.%i.log
-			</fileNamePattern>
-			<minIndex>1</minIndex>
-			<maxIndex>4</maxIndex>
-		</rollingPolicy>
-
-		<triggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<maxFileSize>5MB</maxFileSize>
-		</triggeringPolicy>
-
-		<encoder
-				class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%date{dd-MMM-yyyy HH:mm:ss.SSS} [%thread] %-5level
-				%logger{36}.%M - %msg%n
-			</Pattern>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread CoId - %X{correlationId}] %-5level %logger{36} - %msg %n</pattern>
 		</encoder>
 	</appender>
-
-	<appender name="STDOUT"
-			  class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg
-				%mdc%n
-			</pattern>
-		</encoder>
-	</appender>
-
-	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-			<providers>
-				<pattern>
-						{
-						"@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZZ}",
-						"additionalInfo": "%message",
-						"environmentType": "${HOSTNAME}",
-						"logLevel": "%level",
-						"appName": "${name}",
-						"serviceName": "${name}",
-						"corrId": "%mdc{correlationId}",
-						"exception": "%ex"
-						}
-				</pattern>
-			</providers>
-		</encoder>
-	</appender>
-
-	<logger name="jsonLogger" additivity="false" level="DEBUG">
-		<appender-ref ref="consoleAppender"/>
-	</logger>
-
-	<logger name="org.springframework.cloud"
-			level="INFO" additivity="FALSE">
-		<appender-ref ref="consoleAppender"/>
-	</logger>
-  
-    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter">
-      <level value="DEBUG"/>
-      <appender-ref ref="STDOUT"/>
-  	</logger>
-  
-  	<logger name="org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping"
-			level="INFO" additivity="FALSE">
-		<appender-ref ref="consoleAppender"/>
-	</logger>
-
-	<logger name="org.springframework" level="INFO">
-  		<appender-ref ref="consoleAppender"/>
-	</logger>
-
-	<logger name="org.springframework.boot.web.embedded.tomcat.TomcatWebServer"
-			level="INFO" additivity="FALSE">
-		<appender-ref ref="STDOUT"/>
-	</logger>
-
 	<root level="INFO">
-		<appender-ref ref="consoleAppender"/>
+		<appender-ref ref="stdout" />
 	</root>
 </configuration>

@@ -11,6 +11,8 @@
     },
     "hours": {
       "type": "number",
+      "minimum": 0.1,
+      "maximum": 24.0,
       "description": "hours worked"
     }
   },

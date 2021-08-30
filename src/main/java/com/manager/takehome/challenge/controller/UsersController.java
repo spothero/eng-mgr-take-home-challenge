@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-public class RetrieveUsersController {
+public class UsersController {
 
   @Autowired
   UserService userService;
 
-  private static final Logger logger = LoggerFactory.getLogger(RetrieveUsersController.class);
+  private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
   /**
    * retrieve all active users in the system.
