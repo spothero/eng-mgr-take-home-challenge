@@ -4,7 +4,7 @@
   "title": "worked_hours_record_response",
   "additionalProperties": false,
   "properties": {
-    "postage_success": {
+    "post_success": {
       "type": "boolean",
       "description": "were the hours posted successfully? true or false"
     },

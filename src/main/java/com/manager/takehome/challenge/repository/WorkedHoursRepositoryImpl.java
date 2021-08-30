@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -20,8 +21,7 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
    * * @return affected rows
    */
   public int saveWorkedHoursByUser(int id, WorkedHours workedHours) {
-    return namedParameterJdbcTemplate.update("insert into worked_hours "
-        + "(user_id, date, hours) values (:userId,  :date, :hours);",
+    return namedParameterJdbcTemplate.update(PostgreSqlUtil.SAVE_WORKED_HOURS_FOR_USER_QUERY,
         new BeanPropertySqlParameterSource(workedHours));
   }
 
@@ -29,14 +29,12 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
   * retrieve all worked hours for a user.
   * * @return List of workedHours
   */
-  public List<WorkedHours> findAllWorkedHoursByUser(long userId) {
+  public List<WorkedHours> findAllWorkedHoursByUser(int userId) {
 
     MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-    mapSqlParameterSource.addValue("id",  userId );
+    mapSqlParameterSource.addValue("id",  userId);
 
-    return namedParameterJdbcTemplate.query("select worked_hours.user_id, "
-            + "worked_hours.date, worked_hours.hours from worked_hours "
-            + "where worked_hours.user_id = :id",
+    return namedParameterJdbcTemplate.query(PostgreSqlUtil.FIND_ALL_WORKED_HOURS_BY_USER_QUERY,
         mapSqlParameterSource,
         (rs, rowNum) ->
             new WorkedHours.WorkedHoursBuilder(
@@ -44,6 +42,19 @@ public class WorkedHoursRepositoryImpl implements WorkedHoursRepository {
                 rs.getDate("date").toLocalDate(),
                 rs.getBigDecimal("hours")
             ).build()
+    );
+  }
+
+  @Override
+  public boolean checkRecordedHoursForDateByUser(int userId, LocalDate date) {
+
+    MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+    mapSqlParameterSource.addValue("id", userId);
+    mapSqlParameterSource.addValue("date", date);
+
+    return namedParameterJdbcTemplate.queryForObject(
+        PostgreSqlUtil.CHECK_RECORDED_HOURS_FOR_DATE_BY_USER_QUERY,
+        mapSqlParameterSource, Boolean.class
     );
   }
 }

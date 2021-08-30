@@ -18,4 +18,9 @@ public class UserServiceImpl implements UserService {
     return userRepository.findAllActiveUser();
   }
 
+  @Override
+  public boolean checkIfUserExists(int id ) {
+    return userRepository.checkIfUserExists(id);
+  }
+
 }

@@ -7,4 +7,7 @@ import java.util.List;
 public interface UserRepository {
 
   List<User> findAllActiveUser();
+
+  boolean checkIfUserExists(int id);
+
 }

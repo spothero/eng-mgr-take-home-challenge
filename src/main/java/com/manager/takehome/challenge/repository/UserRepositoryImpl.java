@@ -20,9 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
     MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
     mapSqlParameterSource.addValue("isActive", true);
 
-    return namedParameterJdbcTemplate.query("select users.id, "
-            + "users.first_name, users.last_name, users.email from users"
-            + " where users.active = :isActive",
+    return namedParameterJdbcTemplate.query(PostgreSqlUtil.FIND_ALL_ACTIVE_USERS_QUERY,
         mapSqlParameterSource,
         (rs, rowNum) ->
             new User.UserBuilder(
@@ -33,4 +31,13 @@ public class UserRepositoryImpl implements UserRepository {
                 .build()
     );
   }
+
+  @Override
+  public boolean checkIfUserExists(int id) {
+    return namedParameterJdbcTemplate.queryForObject(
+        PostgreSqlUtil.CHECK_USER_QUERY,
+        new MapSqlParameterSource("id", id), Boolean.class
+    );
+  }
+
 }

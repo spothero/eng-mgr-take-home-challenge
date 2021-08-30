@@ -5,6 +5,7 @@ import com.manager.takehome.challenge.repository.WorkedHoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,8 +19,13 @@ public class WorkedHoursServiceImpl implements WorkedHoursService {
   }
 
   @Override
-  public List<WorkedHours> findAllWorkedHoursByUser(long userId) {
+  public List<WorkedHours> findAllWorkedHoursByUser(int userId) {
     return workedHoursRepository.findAllWorkedHoursByUser(userId);
+  }
+
+  @Override
+  public boolean checkRecordedHoursForDateByUser(int userId, LocalDate date) {
+    return workedHoursRepository.checkRecordedHoursForDateByUser(userId, date);
 
   }
 }

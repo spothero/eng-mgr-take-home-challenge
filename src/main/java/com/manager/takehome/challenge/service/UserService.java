@@ -8,4 +8,6 @@ public interface UserService {
 
   List<User> findAllActiveUsers();
 
+  boolean checkIfUserExists(int id);
+
 }
