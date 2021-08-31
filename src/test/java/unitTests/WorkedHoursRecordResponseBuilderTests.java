@@ -23,7 +23,7 @@ public class WorkedHoursRecordResponseBuilderTests {
 
     WorkedHoursRecordResponse workedHoursRecordResponse = WorkedHoursRecordResponseBuilder
         .buildWorkedHoursRecordResponse(0);
-    //assertEquals(workedHoursRecordResponse.getPostSuccess(), false);
-    //assertEquals(workedHoursRecordResponse.getMessage(), TestConstants.POST_HOURS_FAILED);
+    assertEquals(workedHoursRecordResponse.getPostSuccess(), false);
+    assertEquals(workedHoursRecordResponse.getMessage(), TestConstants.POST_HOURS_FAILED);
   }
 }
