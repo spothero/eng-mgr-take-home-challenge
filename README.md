@@ -87,3 +87,40 @@ Although it's not required, if you have time, we would love to see:
 
 * Automated tests for your solution,
 * A Dockerfile to run the API project in Docker, maybe expanding our [docker-compose.yml](/docker-compose.yml) with it.
+
+
+## How do I spin up the App and start?
+
+* A Springboot service, implemented using Java exposes the three APIs mentioned above.
+* Maven is needed build the Springboot app and create the Docker image.
+* Docker is needed to spin up the application with the database
+ 
+ ```
+git clone https://github.com/navreddy23/eng-mgr-take-home-challenge.git
+
+cd {project-base-directory}
+
+mvn clean install
+
+docker-compose up -d 
+
+Go to any of the endpoints mentioned above
+ ```
+ 
+ ### More Details ...
+ 
+* `mvn clean install` builds the application, after validating the JSON API contract schemas, creating the data 
+transfer objects, running Google checkstyle, PMD, unit tests (junit) and integration tests(@SpringbootTest). 
+Finally, it creates a Docker image called `spothero-app` which is used by Docker Compose to spin up 
+the application with the database
+
+* `mvn clean package` will run everything that `install` does, but it will skip the integration tests making the build 
+faster
+
+* The [API Contracts](/src/main/resources/api_contract_schema_specs) are the foundation of the application. 
+They are defined first using JSON schema. The Data Transfer Objects are auto generated to `src/generated` 
+as part of each Maven build. Having independent API contract schema and data transfer objects decouples 
+the API from the internal implementation, and helps store the API contracts schema in version control 
+to maintain a change history
+
+* `http://localhost:8080/swagger-ui/` is the Swagger endpoint, though it deserves some much needed work.
