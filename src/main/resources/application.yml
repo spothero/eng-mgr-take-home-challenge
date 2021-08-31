@@ -21,17 +21,17 @@ management:
       enabled: true
 
 ---
+spring:
+  profiles: docker
+  datasource:
+    url: "jdbc:postgresql://db:5432/userhours_dev"
+    username: userhours_user
+    password: Super-e3cret
 
-profiles: docker
-datasource:
-  url: "jdbc:postgresql://db:5432/userhours_dev"
-  username: userhours_user
-  password: Super-e3cret
-
-jackson:
-  property-naming-strategy: SNAKE_CASE
-  serialization:
-    indent_output: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent_output: true
 
 server:
   port: 8080
