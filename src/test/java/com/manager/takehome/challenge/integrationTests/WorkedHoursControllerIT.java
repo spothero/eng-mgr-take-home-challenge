@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import testUtils.TestConstants;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -87,10 +88,14 @@ public class WorkedHoursControllerIT {
   @Test
   public void testFetchingWorkedHoursForInValidUser() throws Exception {
 
+    //123 is an invalid user
     when(userService.checkIfUserExists(123)).thenReturn(false);
 
     this.mockMvc.perform(get("/v1/users/123/worked_hours"))
-        .andExpect(status().isNotFound());
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error.error_code").value(404))
+        .andExpect(jsonPath("$.error.error_message")
+            .value(TestConstants.NO_USER));
   }
 
   @Test
@@ -110,11 +115,69 @@ public class WorkedHoursControllerIT {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.post_success").value(true)
-        ).andDo(print());
+        .andExpect(jsonPath("$.post_success").value(true))
+        .andDo(print());
+  }
 
+  @Test
+  public void testPostingWorkedHoursForInValidUser() throws Exception {
 
+    //123 is an invalid user
+    when(userService.checkIfUserExists(123)).thenReturn(false);
 
+    this.mockMvc.perform(post("/v1/users/123/worked_hours")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content("{ \"date\": \"2021-08-15\", \"hours\": 15.5}"))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error.error_code").value(404))
+        .andExpect(jsonPath("$.error.error_message")
+            .value(TestConstants.NO_USER))
+        .andDo(print());
+  }
 
+  @Test
+  public void testPostingWorkedHoursForInvalidWorkedHours() throws Exception {
+
+    //123 is a valid user
+    when(userService.checkIfUserExists(123)).thenReturn(true);
+
+    //hours for userId 123 for 2021/8/15 were already recorded
+    when(workedHoursService.checkRecordedHoursForDateByUser(123,
+        LocalDate.of(2021, 8, 15))).thenReturn(true);
+
+    this.mockMvc.perform(post("/v1/users/123/worked_hours")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content("{ \"date\": \"2021-08-15\", \"hours\": 15.5}"))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isPreconditionFailed())
+        .andExpect(jsonPath("$.error.error_code").value(412))
+        .andExpect(jsonPath("$.error.error_message")
+            .value(TestConstants.HOURS_ALREADY_RECORDED))
+        .andDo(print());
+  }
+
+  @Test
+  public void testFailureOfPostingWorkedHoursForValidUserAndValidDate() throws Exception {
+
+    // 5 is a valid user
+    when(userService.checkIfUserExists(5)).thenReturn(true);
+
+    // hours not recorded yet for user 5 for 2021/8/15
+    when(workedHoursService.checkRecordedHoursForDateByUser(5,
+        LocalDate.of(2021, 8, 15))).thenReturn(false);
+
+    //no rows were inserted into the DB. Reason unknown at this point
+    when(workedHoursService.saveWorkedHoursByUser(any(Integer.class), any(WorkedHours.class))).thenReturn(0);
+
+    this.mockMvc.perform(post("/v1/users/5/worked_hours")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content("{ \"date\": \"2021-08-15\", \"hours\": 15.5}")
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.post_success").value(false))
+        .andExpect(jsonPath("$.message").value(TestConstants.POST_HOURS_FAILED))
+        .andDo(print());
   }
 }
