@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -92,9 +93,16 @@ public class WorkedHoursControllerIT {
         .andExpect(status().isNotFound());
   }
 
-  //@Test
+  @Test
   public void testPostingWorkedHoursForValidUserAndValidDate() throws Exception {
 
+
+    when(userService.checkIfUserExists(5)).thenReturn(true);
+
+    when(workedHoursService.checkRecordedHoursForDateByUser(5,
+        LocalDate.of(2021, 8, 15))).thenReturn(false);
+
+    when(workedHoursService.saveWorkedHoursByUser(any(Integer.class), any(WorkedHours.class))).thenReturn(1);
 
     this.mockMvc.perform(post("/v1/users/5/worked_hours")
         .contentType(MediaType.APPLICATION_JSON)
@@ -105,19 +113,7 @@ public class WorkedHoursControllerIT {
         .andExpect(jsonPath("$.post_success").value(true)
         ).andDo(print());
 
-    when(userService.checkIfUserExists(5)).thenReturn(true);
 
-    when(workedHoursService.checkRecordedHoursForDateByUser(5,
-        LocalDate.of(2021, 8, 15))).thenReturn(false);
-
-
-    WorkedHours workedHours =new WorkedHours.WorkedHoursBuilder()
-        .withHours(BigDecimal.valueOf(15.5))
-        .withDate(LocalDate.of(2021, 8, 15))
-        .withUserId(5)
-        .build();
-
-    when(workedHoursService.saveWorkedHoursByUser(5, workedHours)).thenReturn(1);
 
 
   }
