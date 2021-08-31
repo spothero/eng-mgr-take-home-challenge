@@ -20,11 +20,9 @@ public class SpotHeroApplication {
    * method to display app configs.
    */
   public void run(String... args) throws Exception {
-    System.out.println("using environment:" + appConfig.getEnvironment());
     System.out.println("using server port:" + appConfig.getServerPort());
     System.out.println("using management port:" + appConfig.getManagementServerPort());
     System.out.println("using management server address:" + appConfig.getManagementServerAddress());
-    System.out.println("using spring profile:" + appConfig.getSpringProfile());
   }
 }
 

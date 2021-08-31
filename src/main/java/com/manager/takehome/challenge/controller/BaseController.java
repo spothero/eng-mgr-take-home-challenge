@@ -46,15 +46,11 @@ public class BaseController {
   @ResponseBody
   public String getAppConfigurations() {
 
-    return "environment:"
-        + appConfigurations.getEnvironment()
-        + ", server port:"
+    return ", server port:"
         + appConfigurations.getServerPort()
         + ", management port:"
         + appConfigurations.getManagementServerPort()
         + ", management server address:"
-        + appConfigurations.getManagementServerAddress()
-        + ", spring profile:"
-        + appConfigurations.getSpringProfile();
+        + appConfigurations.getManagementServerAddress();
   }
 }

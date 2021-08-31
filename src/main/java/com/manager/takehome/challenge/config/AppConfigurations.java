@@ -10,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties
 public class AppConfigurations {
 
-  @Value("${spring.profiles}")
-  private String environment;
-
   @Value("${server.port}")
   private String serverPort;
 
@@ -21,13 +18,6 @@ public class AppConfigurations {
 
   @Value("${management.server.address}")
   private String managementServerAddress;
-
-  @Value("${spring.profiles}")
-  private String springProfile;
-
-  public String getEnvironment() {
-    return environment;
-  }
 
   public String getServerPort() {
     return serverPort;
@@ -40,9 +30,4 @@ public class AppConfigurations {
   public String getManagementServerAddress() {
     return managementServerAddress;
   }
-
-  public String getSpringProfile() {
-    return springProfile;
-  }
-
 }

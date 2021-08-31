@@ -9,9 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.manager.takehome.challenge</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>spothero-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <packaging>war</packaging>
+    <name>spothero-app</name>
     <description>Demo project take home challenge</description>
     <properties>
         <!--<java.version>16</java.version>-->
@@ -27,6 +28,7 @@
         <org.apache.commons.version>3.12.0</org.apache.commons.version>
         <failsafe.plugin.version>2.22.1</failsafe.plugin.version>
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
+        <docker.maven.plugin.version>0.34.1</docker.maven.plugin.version>
 
         <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
         <checkstyle.failsOnError>true</checkstyle.failsOnError>
@@ -373,6 +375,46 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>${project.artifactId}</name>
+                            <build>
+                                <contextDir>${project.basedir}</contextDir>
+
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>8080:8080</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+                <!-- each time the 'package' command is run, the 'docker:build' command will be triggered -->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
             </plugin>
         </plugins>
         <resources>
