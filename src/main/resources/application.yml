@@ -1,0 +1,44 @@
+spring:
+  profiles: default
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/userhours_dev"
+    username: userhours_user
+    password: Super-e3cret
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent_output: true
+
+server:
+  port: 8080
+
+management:
+  server:
+    address: 127.0.0.1
+    port: 9090
+    security:
+      enabled: true
+
+---
+spring:
+  profiles: docker
+  datasource:
+    url: "jdbc:postgresql://db:5432/userhours_dev"
+    username: userhours_user
+    password: Super-e3cret
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent_output: true
+
+server:
+  port: 8080
+
+management:
+  server:
+    address: 127.0.0.1
+    port: 9090
+    security:
+      enabled: true

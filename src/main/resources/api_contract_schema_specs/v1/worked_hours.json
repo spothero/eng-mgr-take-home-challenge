@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "description": "request schema to post new worked hours",
+  "title": "worked_hours",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the user posting the worked hours"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "date on which hours were recorded"
+    },
+    "hours": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 24.0,
+      "description": "first name of the user"
+    }
+  },
+  "required": ["id", "date", "hours"],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

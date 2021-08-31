@@ -1,3 +1,14 @@
 usersapp/.venv
 usersapp/usersapp.egg-info
 **/__pycache__
+logs/
+mvnw
+mvnw.cmd
+target/
+HELP.md
+.idea/
+*.iws
+*.iml
+*.ipr
+/out/
+/src/generated/
