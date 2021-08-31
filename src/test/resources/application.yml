@@ -1,0 +1,22 @@
+spring:
+  profiles: default
+  datasource:
+    #local in-memory database for testing
+    url: "jdbc:h2:mem:testdb;;MODE=PostgreSQL;DB_CLOSE_DELAY=-1"
+    username: sa
+    password: sa
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      indent_output: true
+
+server:
+  port: 8082
+
+management:
+  server:
+    address: 127.0.0.1
+    port: 9090
+    security:
+      enabled: true
